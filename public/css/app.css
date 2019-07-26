@@ -1,0 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);.search-form {
+  width: 300px;
+  display: flex;
+}
+
+.search-form__input {
+  flex: 3;
+}
+
+.search-form__button {
+  flex: 1;
+}
+
