@@ -46,7 +46,7 @@
                 this.button = "Поиск...";
                 setTimeout(() => {
                     if (!isNaN(query)) {
-                        if (query != '') {
+                        if (query !== '' && query !== '0') {
                             axios.get('api/search/' + query)
                             .then(response => {
                                 if (response.data.data) {
@@ -62,7 +62,8 @@
                         }
                     }
                     this.button = "Найти";
-                }, 1000);
+                }, 500);
+
             }
         }
     }

@@ -1744,7 +1744,7 @@ __webpack_require__.r(__webpack_exports__);
       this.button = "Поиск...";
       setTimeout(function () {
         if (!isNaN(query)) {
-          if (query != '') {
+          if (query !== '' && query !== '0') {
             axios.get('api/search/' + query).then(function (response) {
               if (response.data.data) {
                 _this.data = JSON.parse(response.data.data);
@@ -1760,7 +1760,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.button = "Найти";
-      }, 1000);
+      }, 500);
     }
   }
 });
