@@ -6,6 +6,7 @@
             </div>
             <div class="search-form__button" @click="fetch(query)">
                 {{button}}
+                <div class="lds-spinner" v-if="loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
         </div>
         <div v-if="alert" class="alert"><i>{{alert}}</i></div>
@@ -25,6 +26,7 @@
                 button: 'Найти',
                 alert: null,
                 data: null,
+                loader: false,
             }
         },
         watch: {
@@ -43,7 +45,7 @@
         methods: {
             fetch(query) {
                 this.data = null;
-                this.button = "Поиск...";
+                this.loader = true;
                 setTimeout(() => {
                     if (!isNaN(query)) {
                         if (query !== '' && query !== '0') {
@@ -57,13 +59,15 @@
                             .catch(error => {
                                 this.alert = error;
                             });
-                        } else {
+                        } else if (query === '0') {
+                            this.alert = 'Введите число больше нуля';
+                        }
+                        else {
                             this.alert = 'Введите число'
                         }
                     }
-                    this.button = "Найти";
+                    this.loader = false;
                 }, 500);
-
             }
         }
     }

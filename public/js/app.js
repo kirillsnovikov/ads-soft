@@ -1716,13 +1716,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       query: '',
       button: 'Найти',
       alert: null,
-      data: null
+      data: null,
+      loader: false
     };
   },
   watch: {
@@ -1741,7 +1743,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.data = null;
-      this.button = "Поиск...";
+      this.loader = true;
       setTimeout(function () {
         if (!isNaN(query)) {
           if (query !== '' && query !== '0') {
@@ -1754,12 +1756,14 @@ __webpack_require__.r(__webpack_exports__);
             })["catch"](function (error) {
               _this.alert = error;
             });
+          } else if (query === '0') {
+            _this.alert = 'Введите число больше нуля';
           } else {
             _this.alert = 'Введите число';
           }
         }
 
-        _this.button = "Найти";
+        _this.loader = false;
       }, 500);
     }
   }
@@ -2307,7 +2311,25 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\n            " + _vm._s(_vm.button) + "\n        ")]
+        [
+          _vm._v("\n            " + _vm._s(_vm.button) + "\n            "),
+          _vm.loader
+            ? _c("div", { staticClass: "lds-spinner" }, [
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div"),
+                _c("div")
+              ])
+            : _vm._e()
+        ]
       )
     ]),
     _vm._v(" "),
