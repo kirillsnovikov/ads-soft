@@ -12,15 +12,15 @@ class SearchController extends Controller
 
     public function search($id)
     {
-//        $id = $request->id;
-//        dd($id);
-        if (!empty($id)) {
-            $data = Data::where('id', $id)->get();
-//            dd($data);
-//            $data = DataResource::collection($data);
-//            dd($data->resource);
-            return DataResource::collection($data);
+        $data = Data::where('id', $id)->first();
+
+        if ($data) {
+            if ($data->access) {
+                return new DataResource($data);
+            }
+            return json_encode(['error' => 'Данная запись недоступна для просмотра!']);
         }
+        return json_encode(['error' => 'Данной записи нет в таблице']);
     }
 
 }

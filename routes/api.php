@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+//Route::middleware('data.access')->get('search/{id?}', 'Api\SearchController@search')->name('search');
 Route::get('search/{id?}', 'Api\SearchController@search')->name('search');

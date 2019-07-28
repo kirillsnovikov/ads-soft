@@ -1706,13 +1706,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      query: ''
+      query: '',
+      button: 'Найти',
+      alert: null,
+      data: null
     };
   },
-  watch: {}
+  watch: {
+    query: function query(newValue, oldValue) {
+      if (isNaN(newValue)) {
+        this.alert = 'Введите число';
+      } else if (newValue === '0') {
+        this.alert = 'Введите число больше нуля';
+      } else {
+        this.alert = null;
+      }
+    }
+  },
+  methods: {
+    fetch: function fetch(query) {
+      var _this = this;
+
+      this.data = null;
+      this.button = "Поиск...";
+      setTimeout(function () {
+        if (!isNaN(query)) {
+          if (query != '') {
+            axios.get('api/search/' + query).then(function (response) {
+              if (response.data.data) {
+                _this.data = JSON.parse(response.data.data);
+              }
+
+              _this.alert = response.data.error;
+            })["catch"](function (error) {
+              _this.alert = error;
+            });
+          } else {
+            _this.alert = 'Введите число';
+          }
+        }
+
+        _this.button = "Найти";
+      }, 1000);
+    }
+  }
 });
 
 /***/ }),
@@ -2224,27 +2274,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "search-component" }, [
     _c("div", { staticClass: "search-form" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.query,
-            expression: "query"
-          }
-        ],
-        staticClass: "search-form__input",
-        attrs: { type: "text", placeholder: "Введите ID записи" },
-        domProps: { value: _vm.query },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", { staticClass: "search-form__input" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query,
+              expression: "query"
             }
-            _vm.query = $event.target.value
+          ],
+          attrs: { type: "text", placeholder: "Введите ID записи" },
+          domProps: { value: _vm.query },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.query = $event.target.value
+            }
           }
-        }
-      }),
+        })
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -2252,13 +2303,32 @@ var render = function() {
           staticClass: "search-form__button",
           on: {
             click: function($event) {
-              return _vm.fetch(_vm.keywords)
+              return _vm.fetch(_vm.query)
             }
           }
         },
-        [_vm._v(_vm._s(_vm.query))]
+        [_vm._v("\n            " + _vm._s(_vm.button) + "\n        ")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.alert
+      ? _c("div", { staticClass: "alert" }, [
+          _c("i", [_vm._v(_vm._s(_vm.alert))])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.data
+      ? _c(
+          "ul",
+          _vm._l(_vm.data, function(value, name) {
+            return _c("li", [
+              _vm._v("\n            " + _vm._s(name) + ": "),
+              _c("strong", [_vm._v(_vm._s(value))])
+            ])
+          }),
+          0
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -14474,8 +14544,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\ads-soft\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\ads-soft\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\OSPanel\domains\adssoft\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\adssoft\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -6,15 +6,15 @@ use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 /*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+  |--------------------------------------------------------------------------
+  | Model Factories
+  |--------------------------------------------------------------------------
+  |
+  | This directory should contain each of the model factory definitions for
+  | your application. Factories provide a convenient way to generate new
+  | model instances for testing / seeding your application's database.
+  |
+ */
 
 $factory->define(Data::class, function (Faker $faker) {
     $data = [
@@ -29,8 +29,8 @@ $factory->define(Data::class, function (Faker $faker) {
         'jobTitle' => $faker->jobTitle,
     ];
     $data = json_encode($data);
+//    dd($data);
     return [
         'data' => $data,
-        'access' => $faker->numberBetween(0, 1),
     ];
 });
